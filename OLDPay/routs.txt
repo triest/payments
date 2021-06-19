@@ -1,0 +1,80 @@
++--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
+|[32m Domain [39m|[32m Method    [39m|[32m URI                           [39m|[32m Name             [39m|[32m Action                                                                 [39m|[32m Middleware [39m|
++--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
+|        | GET|HEAD  | /                             |                  | App\Http\Controllers\HomeController@index                              | web        |
+[39;49m|        | POST      | api/login                     |                  | App\Http\Controllers\Auth\LoginController@login                        | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mguest      |
+[39;49m|        | GET|HEAD  | api/products                  | products.index   | App\Http\Controllers\ProductController@index                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | api/products                  | products.store   | App\Http\Controllers\ProductController@store                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/products/create           | products.create  | App\Http\Controllers\ProductController@create                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/products/{product}        | products.show    | App\Http\Controllers\ProductController@show                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | PUT|PATCH | api/products/{product}        | products.update  | App\Http\Controllers\ProductController@update                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | DELETE    | api/products/{product}        | products.destroy | App\Http\Controllers\ProductController@destroy                         | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/products/{product}/edit   | products.edit    | App\Http\Controllers\ProductController@edit                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/profile                   | profile.index    | App\Http\Controllers\ProfileController@index                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | api/profile                   | profile.store    | App\Http\Controllers\ProfileController@store                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | api/profile/main-photo/upload |                  | App\Http\Controllers\ProfileController@uploadMainPhoto                 | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/profile/{profile}         | profile.show     | App\Http\Controllers\ProfileController@show                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | PUT|PATCH | api/profile/{profile}         | profile.update   | App\Http\Controllers\ProfileController@update                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | DELETE    | api/profile/{profile}         | profile.destroy  | App\Http\Controllers\ProfileController@destroy                         | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+|        | POST      | api/register                  |                  | App\Http\Controllers\Auth\RegisterController@register                  | api        |
+[39;49m|        | GET|HEAD  | api/search                    | search.index     | App\Http\Controllers\SearchController@index                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | api/search                    | search.store     | App\Http\Controllers\SearchController@store                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/search/{search}           | search.show      | App\Http\Controllers\SearchController@show                             | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | PUT|PATCH | api/search/{search}           | search.update    | App\Http\Controllers\SearchController@update                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | DELETE    | api/search/{search}           | search.destroy   | App\Http\Controllers\SearchController@destroy                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/settings                  | settings.index   | App\Http\Controllers\SettingController@index                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | api/settings                  | settings.store   | App\Http\Controllers\SettingController@store                           | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/settings/create           | settings.create  | App\Http\Controllers\SettingController@create                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/settings/{setting}        | settings.show    | App\Http\Controllers\SettingController@show                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | PUT|PATCH | api/settings/{setting}        | settings.update  | App\Http\Controllers\SettingController@update                          | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | DELETE    | api/settings/{setting}        | settings.destroy | App\Http\Controllers\SettingController@destroy                         | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | api/settings/{setting}/edit   | settings.edit    | App\Http\Controllers\SettingController@edit                            | api[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+|        | GET|HEAD  | api/test                      |                  | Closure                                                                | api        |
+[39;49m|        | GET|HEAD  | app                           |                  | Closure                                                                | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | GET|HEAD  | app/{any}                     |                  | Closure                                                                | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+|        | GET|HEAD  | home                          | home             | App\Http\Controllers\HomeController@index                              | web        |
+[39;49m|        | GET|HEAD  | login                         | login            | App\Http\Controllers\Auth\LoginController@showLoginForm                | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mguest      |
+[39;49m|        | POST      | login                         |                  | App\Http\Controllers\Auth\LoginController@login                        | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mguest      |
+|        | POST      | logout                        | logout           | App\Http\Controllers\Auth\LoginController@logout                       | web        |
+|        | GET|HEAD  | logout                        | logout           | App\Http\Controllers\Auth\LoginController@logout                       | web        |
+[39;49m|        | GET|HEAD  | password/confirm              | password.confirm | App\Http\Controllers\Auth\ConfirmPasswordController@showConfirmForm    | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+[39;49m|        | POST      | password/confirm              |                  | App\Http\Controllers\Auth\ConfirmPasswordController@confirm            | web[39;49m[39;49m        |[39;49m
+[39;49m|        |           |                               |                  |                                                                        | [39;49mauth       |
+|        | POST      | password/email                | password.email   | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web        |
+|        | GET|HEAD  | password/reset                | password.request | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web        |
+|        | POST      | password/reset                | password.update  | App\Http\Controllers\Auth\ResetPasswordController@reset                | web        |
+|        | GET|HEAD  | password/reset/{token}        | password.reset   | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web        |
+|        | GET|HEAD  | register                      | register         | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web        |
+|        | POST      | register                      |                  | App\Http\Controllers\Auth\RegisterController@register                  | web        |
++--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
