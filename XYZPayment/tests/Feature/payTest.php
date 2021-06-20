@@ -19,26 +19,48 @@ class payTest extends TestCase
      */
     public function test_form()
     {
-      $order=Order::factory()->count(1)
+        $order = Order::factory()->count(1)
                 ->create();
 
 
-      $user=User::factory()->count(1)->create();
+        $user = User::factory()->count(1)->create();
 
-      $payment=new Payment();
-      $payment->order_id=$order[0]->id;
-      $payment->name="ds";
-      $payment->sum=50;
-      $payment->save();
+        $payment = new Payment();
+        $payment->order_id = $order[0]->id;
+        $payment->name = "ds";
+        $payment->sum = 50;
+        $payment->save();
 
 
-        $array=['_token' => csrf_token(),
-                'sum'=>200,
-                'order_id'=>$order[0]->id];
+        $array = [
+                '_token' => csrf_token(),
+                'sum' => 200,
+                'order_id' => $order[0]->id
+        ];
 
-        $response = $this->post('/form',$array);
+        $response = $this->post('/form', $array);
 
         $response->assertStatus(302);
+    }
+
+    public function test_validation_form_fail()
+    {
+        $array=[    '_token' => csrf_token()];
+        $response = $this->get('/pay', $array);
+
+        $response->assertStatus(422);
+    }
+
+    public function test_validation_form_success()
+    {
+        $order = Order::factory()->count(1)
+                ->create();
+        $array=[    '_token' => csrf_token(),
+                'sum'=>100,
+                'order'=> $order[0]->id];
+        $response = $this->get('/pay', $array);
+
+        $response->assertStatus(422);
     }
 
 
