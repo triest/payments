@@ -2,7 +2,7 @@
 
 
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\PaymentsController;
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('create',[PaymentsController::class,'pay']);
-Route::get('get-status',[PaymentsController::class,'getStatus']);
+Route::post('create',[PaymentController::class,'create']);
+Route::get('get-status',[PaymentController::class,'getStatus']);
+
+Route::post('form',[PaymentController::class,'form']);
 
 Route::apiResource('orders',OrderController::class)->only('index');
 

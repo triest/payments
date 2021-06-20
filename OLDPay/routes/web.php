@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Auth\LoginController;
 
 use Illuminate\Support\Facades\Route;
@@ -36,3 +37,5 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/input',[PaymentController::class,'input'])->name('input');

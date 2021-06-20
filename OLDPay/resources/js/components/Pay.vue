@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         saveForm() {
-            axios.post('/api/create', this.form).then((res) => {
+            axios.post('/api/form', this.form).then((res) => {
                 console.log(res.data.status);
                 console.log(res.data.redirect_to);
                 if(res.data.status==="success" && res.data.redirect_to!==undefined){

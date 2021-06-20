@@ -5,50 +5,76 @@ namespace App\Service;
 
 
 use App\Models\Order;
-use App\Models\Payments;
+use App\Models\Payment;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
+
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\Array_;
 
 class PaymentService
 {
-    public function pay($input ){
+    private $url = "http://old-pay.ru/api/create";
 
-
-        $validator = Validator::make($input,[
-                'name' => 'required',
-                'sum' => 'required|numeric|min:0.01',
-                'order_id' => 'required|exists:orders,id',
-        ]);
-
-
-        if ($validator->fails()) {
-            return (['result'=>false,'message'=> $validator->messages()]);
+    public function pay($input)
+    {
+        $client = new Client(
+        );
+        try {
+            $result = $client->request(
+                    'POST',
+                    $this->url,
+                    [
+                            'form_params' => [
+                                    'order_id' => $input['order_id'],
+                                    'transaction_id' =>  $input['transaction_id'],
+                                    'sum' => $input['sum'],
+                                    'sign' => config('app.secret_key')
+                            ]
+                    ]
+            );
+            return ['result' => true, 'data' => $result->getBody()];
+        } catch (BadResponseException $e) {
+            $message = $e->getMessage();
+            return ['result' => false, 'message' => $message];
         }
-
-        $order=Order::find($input['order_id']);
-
-        if (!$order) {
-            return (['result' => false, 'message' => ['order_id' => ['Заказ не найден']]]);
-        }
-
-
-        $payment=new Payments();
-
-        $payment->name=$input['name'];
-        $payment->sum=$input['sum'];
-        $payment->order_id=$input['order_id'];
-        $payment->save();
-        $order->paid=1;
-        $order->status_id=2;
-        $order->save();
-        $user=$order->user()->first();
-        if(!$user){
-            return (['result' => false, 'message' => ['user' => ['Пользователь не найлен']]]);
-        }
-        $user->balance+=$payment->sum;
-
-        $user->save();
-
-        return (['result'=>true,'data'=>['url'=>$order->url]]);
     }
+
+    /*ответ от плалежной систнмы*/
+    public function sendResponse($order_id,$transaction_id,$sum){
+
+        $client = new Client(
+                [
+                        'headers' => [
+                                'Content-Type' => 'application/json',
+                        ]
+                ]
+        );
+        try {
+            $result = $client->request(
+                    'POST',
+                    "http://old-pay.ru/input",
+                    [
+                            'form_params' => [
+                                    'order_id' => $order_id,
+                                    'transaction_id' => $transaction_id,
+                                    'sum' =>$sum,
+                                    'sign'=>config('app.secret_key')
+                            ]]
+            );
+            $temp=$result->getBody();
+
+            return ['result'=>true,'data'=>$temp];
+
+        } catch (BadResponseException $e) {
+            $message = $e->getMessage();
+            Log::debug($e->getMessage());
+            Log::debug($e->getCode());
+            return ['result' => false, 'message' => $message];
+        }
+
+
+    }
+
 }

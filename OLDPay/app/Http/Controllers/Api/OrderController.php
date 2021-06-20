@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        return response()->json(Order::all());
+        return response()->json(Order::select(['*'])->simplePaginate(10));
     }
 
     /**
