@@ -36,8 +36,7 @@ class PaymentController extends Controller
 
 
     public function form(){
-       $order=Order::select(['id'])->where(['paid'=>0])->
-       first();
+       $order=Order::select(['id'])->where(['paid'=>0])->first();
 
         return view('form')->with(['order_id'=>$order->id]);
     }
@@ -45,7 +44,7 @@ class PaymentController extends Controller
     public function sendPay(PaymentFormRequest $request)
     {
         $payment = new Payment();
-        $payment->order_id = Payment::max('id') ? Payment::max('id') : 1;
+        $payment->order_id = Order::max('id') ? Order::max('id') : 1;
         $payment->name = $request->name;
         $payment->sum = $request->sum;
         $payment->save();
@@ -64,6 +63,8 @@ class PaymentController extends Controller
      * */
     public function pay(Request $request)
     {
+
+
         $validator = Validator::make(
                 $request->all(),
                 [

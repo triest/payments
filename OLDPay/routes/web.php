@@ -18,7 +18,7 @@ use Laravel\Telescope\Http\Controllers\HomeController;
 
 Auth::routes();
 
-Route::get('/',[HomeController::class,'index']);
+Route::redirect('/','/app');
 
 Route::get('/app', function () {
     return view('layouts.app');

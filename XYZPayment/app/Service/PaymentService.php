@@ -18,19 +18,14 @@ class PaymentService
      * */
     function pay($sum,$order_id,$name ){
         $client = new Client();
-        Log::debug($this->url);
         try {
-            $response = $client->get($this->url, ['sum' => $sum, 'order_id' => $order_id, 'name' => $name]);
-            Log::debug($response->getBody());
-            Log::debug($response->getStatusCode());
-            Log::info("payment service");
-            Log::debug("success");
+            $response = $client->get(
+                    $this->url,
+                    ['query' => ['sum' => $sum, 'order_id' => $order_id, 'transaction_id' => 1]]
+            );
+
             return true;
         }catch (BadResponseException $exception){
-            Log::info("payment service");
-            Log::debug("error");
-            Log::error($this->url);
-            Log::error($exception->getMessage());
             return false;
         }
 

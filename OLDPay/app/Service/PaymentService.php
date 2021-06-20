@@ -25,6 +25,12 @@ class PaymentService
             return (['result'=>false,'message'=> $validator->messages()]);
         }
 
+        $order=Order::find($input['order_id']);
+
+        if (!$order) {
+            return (['result' => false, 'message' => ['order_id' => ['Заказ не найден']]]);
+        }
+
 
         $payment=new Payments();
 
@@ -32,6 +38,17 @@ class PaymentService
         $payment->sum=$input['sum'];
         $payment->order_id=$input['order_id'];
         $payment->save();
-        return (['result'=>true,'data'=>['url'=>"http://example.com"]]);
+        $order->paid=1;
+        $order->status_id=2;
+        $order->save();
+        $user=$order->user()->first();
+        if(!$user){
+            return (['result' => false, 'message' => ['user' => ['Пользователь не найлен']]]);
+        }
+        $user->balance+=$payment->sum;
+
+        $user->save();
+
+        return (['result'=>true,'data'=>['url'=>$order->url]]);
     }
 }

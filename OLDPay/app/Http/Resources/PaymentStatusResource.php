@@ -15,7 +15,7 @@ class PaymentStatusResource extends JsonResource
     public function toArray($request)
     {
         return [
-                'status' => $this->status ? $this->status->name:null,
+                'status' => $this->order->status ? $this->order->status->name:null,
                 'sum' => $this->sum ? $this->sum:null,
                 'order_id' => $this->order_id ?? $this->order_id::null,
         ];

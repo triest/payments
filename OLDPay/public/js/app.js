@@ -2244,7 +2244,7 @@ var routes = [{
   path: '/:id',
   component: _components_Pay__WEBPACK_IMPORTED_MODULE_0__.default,
   meta: {
-    title: 'Главная'
+    title: 'Оплата'
   }
 }];
 

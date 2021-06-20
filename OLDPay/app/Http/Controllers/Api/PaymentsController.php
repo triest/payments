@@ -27,10 +27,10 @@ class PaymentsController extends Controller
             return response()->json(['result'=>false,'message'=> $validator->messages()],422);
         }
 
-        $payment_servise=new PaymentService();
-         $result=$payment_servise->pay($request->toArray());
+        $payment_service=new PaymentService();
+         $result=$payment_service->pay($request->toArray());
          if(!$result['result']){
-             return response()->json(['result'=>false,'message'=> $result['messages']],422);
+             return response()->json(['result'=>false,'message'=> $result['message']],422);
          }
 
         return response()->json(["status"=>"success", "redirect_to"=>"http://example.com"])->setStatusCode(202);
@@ -47,7 +47,7 @@ class PaymentsController extends Controller
             return response()->json(['result'=>false,'message'=> $validator->messages()],422);
         }
 
-        $payment=Payments::select(['*'])->with('status')->first();
+        $payment=Payments::select(['*'])->where('id',$request->id)->with('status','order')->first();
 
         if (!$request->hasHeader('X-Secret-Key') || !config('app.secret_key') || $request->header('X-Secret-Key'
                 ) != config('app.secret_key')) {

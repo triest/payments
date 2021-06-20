@@ -13,8 +13,9 @@ class AddPriceToOrder extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
+            $table->float('price')->nullable()->default(null);
         });
     }
 
@@ -25,8 +26,9 @@ class AddPriceToOrder extends Migration
      */
     public function down()
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
+            $table->dropColumn('price');
         });
     }
 }

@@ -16,7 +16,7 @@ export const routes = [
         name: 'order',
         path: '/:id',
         component: Pay,
-        meta: {title: 'Главная'}
+        meta: {title: 'Оплата'}
     },
 
 ];

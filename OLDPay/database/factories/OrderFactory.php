@@ -26,7 +26,8 @@ class OrderFactory extends Factory
         return [
             //
             'user_id'=>User::select(['*'])->inRandomOrder()->first()->id,
-            'price'=>$this->faker->randomFloat(0,15000)
+            'price'=>$this->faker->randomFloat(0,15000),
+            'url'=>"example.com"
         ];
     }
 }
