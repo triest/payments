@@ -63,5 +63,33 @@ class payTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_input_validtion_fail()
+    {
+        $response=$this->post('input');
 
+        Log::debug($response->getStatusCode());
+
+        $response->assertStatus(422);
+    }
+
+    public function test_input(){
+
+        $user=User::factory()->count(1)->create();
+        $user=$user[0];
+
+        $order = Order::factory()->count(1)
+                ->create();
+
+        $user=$order->user()->first();
+        $balance=$user->balance;
+
+
+        $response=$this->post('input',['order_id'=>$order[0]->id,'transaction_id'=>1,'sum'=>10,'sign'=>config('app.secret_key')]);
+
+        $new_user=User::select(['balance'])->where(['id'=>$user->id])->first();
+
+        self::assertEquals($new_user->balance,$balance+10);
+
+     //   $response->assertStatus(202);
+    }
 }

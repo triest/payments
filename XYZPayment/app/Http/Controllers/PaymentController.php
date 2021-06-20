@@ -99,7 +99,6 @@ class PaymentController extends Controller
      */
     public function input(Request $request)
     {
-        $payment = new Payment();
 
         // array check
         $validator = Validator::make(
@@ -119,24 +118,27 @@ class PaymentController extends Controller
         }
 
 
-        Log::debug($request->sign);
-        Log::debug(config('app.secret_key'));
-
         if ($request->sign != config('app.secret_key')) {
             return \response(['errors' => "wrong_secret_key"], 422);
         }
+/*
+        $order = $payment->order()->first();
+
+*/
+        $order=Order::select()->where('id',$request->order_id)->first();
+        if (!$order) {
+            Log::error("order not found");
+            Log::debug(print_r($request->post()));
+            return \response([],405);
+        }
+
+        $payment=new Payment();
 
         $payment->order_id = $request->order_id;
         $payment->transaction_id = $request->transaction_id;
         $payment->sum = $request->sum;
         $payment->save();
 
-        $order = $payment->order()->first();
-        if (!$order) {
-            Log::error("order not found");
-            Log::debug(print_r($request->post()));
-            return \response()->setStatusCode(405);
-        }
 
         $user = $order->user()->first();
 
@@ -151,7 +153,7 @@ class PaymentController extends Controller
                         "name" => "name",
                         'transaction_id' => $payment->transaction_id,
                         'secret_key' => config('app.secret_key')
-                ]
-        )->setStatusCode(202);
+                ],202
+        );
     }
 }
